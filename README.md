@@ -4,7 +4,7 @@
 
 ## Example
 
-```typescriptreact
+```tsx
 import { useObjectState } from './hooks'
 
 const App = () => {
