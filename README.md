@@ -26,12 +26,12 @@ const App = () => {
         increment 2
       </button>
 
-      <button onClick={() => state.setObject({ count: state.count + 1 })}>
+      <button onClick={() => state.setState({ count: state.count + 1 })}>
         increment 3
       </button>
 
       <button
-        onClick={() => state.setObject(({ count }) => ({ count: count + 1 }))}
+        onClick={() => state.setState(({ count }) => ({ count: count + 1 }))}
       >
         increment 4
       </button>
