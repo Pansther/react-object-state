@@ -1,8 +1,11 @@
 {
   "name": "react-object-state",
+  "version": "1.0.0",
+  "description": "React hooks for creating state in object form and easier to manipulate",
+  "author": "Pansther",
+  "repository": "Pansther/react-object-state",
   "license": "MIT",
   "private": true,
-  "version": "0.1.0",
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -33,5 +36,12 @@
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",
     "vite-plugin-dts": "^4.5.3"
-  }
+  },
+  "keywords": [
+    "react",
+    "state",
+    "management",
+    "hooks",
+    "object"
+  ]
 }

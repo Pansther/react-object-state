@@ -1,54 +1,43 @@
-# React + TypeScript + Vite
+# react-object-state
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> React hooks for creating state in object form and easier to manipulate.
 
-Currently, two official plugins are available:
+## Example
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```typescriptreact
+import { useObjectState } from './hooks'
 
-## Expanding the ESLint configuration
+const App = () => {
+  const state = useObjectState({
+    count: 0,
+  })
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+  return (
+    <div>
+      <div>{state.count}</div>
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+      <button onClick={() => state.set('count', 0)}>reset</button>
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+      <button onClick={() => state.set('count', state.count + 1)}>
+        increment
+      </button>
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+      <button onClick={() => state.set('count', (count) => count + 1)}>
+        increment 2
+      </button>
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+      <button onClick={() => state.setObject({ count: state.count + 1 })}>
+        increment 3
+      </button>
+
+      <button
+        onClick={() => state.setObject(({ count }) => ({ count: count + 1 }))}
+      >
+        increment 4
+      </button>
+    </div>
+  )
+}
+
+export default App
 ```

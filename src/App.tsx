@@ -6,8 +6,10 @@ const App = () => {
   })
 
   return (
-    <>
+    <div>
       <div>{state.count}</div>
+
+      <button onClick={() => state.set('count', 0)}>reset</button>
 
       <button onClick={() => state.set('count', state.count + 1)}>
         increment
@@ -26,7 +28,7 @@ const App = () => {
       >
         increment 4
       </button>
-    </>
+    </div>
   )
 }
 
