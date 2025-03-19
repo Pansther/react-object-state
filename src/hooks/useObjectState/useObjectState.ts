@@ -1,12 +1,23 @@
 import { useState } from 'react'
 
-const useObjectState = <S extends object>(defaultValue: S) => {
+import type {
+  ObjectStateSet,
+  ObjectStateSetState,
+  ObjectStateReturned,
+} from './useObjectState.type'
+
+/**
+ * React Custom hooks for creating state in object form and easier to manipulate.
+ * @template S The type of the state object.
+ * @param {S} defaultValue The initial state object.
+ * @returns {ObjectStateReturned} The state object with `set` and `setState` methods.
+ */
+const useObjectState = <S extends object>(
+  defaultValue: S
+): ObjectStateReturned<S> => {
   const [state, setState] = useState<S>(defaultValue)
 
-  const set = <K extends keyof S>(
-    key: K,
-    dispatch: S[K] | ((prev: S[K]) => S[K])
-  ) => {
+  const set: ObjectStateSet<S> = (key, dispatch) => {
     if (dispatch instanceof Function) {
       setState((prev) => ({ ...prev, [key]: dispatch(prev[key]) }))
     } else {
@@ -14,9 +25,7 @@ const useObjectState = <S extends object>(defaultValue: S) => {
     }
   }
 
-  const setObjectState = <T extends Partial<S>>(
-    dispatch: T | ((prev: S) => T)
-  ) => {
+  const setObjectState: ObjectStateSetState<S> = (dispatch) => {
     if (dispatch instanceof Function) {
       setState((prev) => ({ ...prev, ...dispatch(prev) }))
     } else {
