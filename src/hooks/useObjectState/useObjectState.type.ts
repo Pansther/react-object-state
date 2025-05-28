@@ -1,28 +1,52 @@
-export type ObjectStateSet<S> = <K extends keyof S>(
+export type ObjectStateSetKey<S> = <K extends keyof S>(
   key: K,
   dispatch: S[K] | ((prev: Partial<S[K]>) => S[K])
 ) => void
 
-export type ObjectStateSetState<S> = <T extends Partial<S>>(
+export type ObjectStateSetObject<S> = <T extends Partial<S>>(
   dispatch: T | ((prev: S) => T)
 ) => void
 
-export interface ObjectStateDispatch<S extends object> {
+export interface ObjectStateSet<S> {
   /**
-   * Updates a single property in the state object.
-   * @template K The key of the property to update.
-   * @param {K} key The key of the property to update.
-   * @param {S[K] | ((prev: Partial<S[K]>) => S[K])} dispatch The new value or a function that receives the previous value and returns a new value.
+   * Overload 1: Updates a single property within the state object by its key.
+   *
+   * @param {K} key The key of the property in the state object to update.
+   * @param {S[K] | ((prev: Partial<S[K]>) => S[K])} dispatch The new value for the key, or a function that receives
+   * the previous value of that key and returns the new value.
    * @returns {void}
+   *
+   * @example
+   * // Increment 'count' property:
+   * set('count', 10)
+   * // or
+   * set('count', (prev) => prev + 1)
    */
+  <K extends keyof S>(
+    key: K,
+    dispatch: S[K] | ((prev: Partial<S[K]>) => S[K])
+  ): void
+
+  /**
+   * Overload 2: Updates multiple properties or the entire object state partially.
+   *
+   * @param {T | ((prev: S) => T)} dispatch The partial object with new values, or a function that receives
+   * the previous full state and returns a partial object to merge.
+   * @returns {void}
+   *
+   * @example
+   * // Increment 'count' property:
+   * set({ count: 10 })
+   * // or
+   * set((prev) => ({ count: prev.count + 1 }))
+   * // or
+   * set(({ count }) => ({ count: count + 1 }))
+   */
+  <T extends Partial<S>>(dispatch: T | ((prev: S) => T)): void
+}
+
+export interface ObjectStateDispatch<S> {
   set: ObjectStateSet<S>
-  /**
-   * Updates multiple properties in the state object.
-   * @template T A partial type of the state object.
-   * @param {T | ((prev: S) => T)} dispatch An object with the new state or a function that receives the previous state and returns a new state object.
-   * @returns {void}
-   */
-  setState: ObjectStateSetState<S>
 }
 
 export type ObjectStateReturned<S extends object> = S & ObjectStateDispatch<S>
