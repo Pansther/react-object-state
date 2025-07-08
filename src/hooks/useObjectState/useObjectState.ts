@@ -11,6 +11,21 @@ import type {
  * @template S The type of the state object.
  * @param {S} defaultValue The initial state object.
  * @returns {ObjectStateReturned} The state object with `set` methods.
+ * 
+ * @example
+ * const state = useObjectState({
+ *  count: 0,
+ *  foo: 'bar',
+ * })
+ * 
+ * // Example 1 - Set value explicit
+ * set('count', 10)
+ * set({ count: 10 })
+ *
+ * // Example 2 - Set value with previous value
+ * set('count', (prev) => prev + 1)
+ * set((prev) => ({ count: prev + 1 }))
+ * set(({ count }) => ({ count: count + 1 })) // destructuring
  */
 const useObjectState = <S extends object>(
   defaultValue: S

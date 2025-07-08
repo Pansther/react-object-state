@@ -20,6 +20,7 @@ import { useObjectState } from 'react-object-state'
 const App = () => {
   const state = useObjectState({
     count: 0,
+    foo: 'bar',
   })
 
   const reset = () => {
@@ -59,11 +60,11 @@ const App = () => {
   })
 
   const increment = () => {
-    state.setState({ count: state.count + 1 })
+    state.set({ count: state.count + 1 })
     // or use previous value
-    state.setState((prev) => ({ count: prev.count + 1 }))
+    state.set((prev) => ({ count: prev.count + 1 }))
     // or use previous value with object destructuring
-    state.setState(({ count }) => ({ count: count + 1 }))
+    state.set(({ count }) => ({ count: count + 1 }))
   }
 
   return (
@@ -101,7 +102,7 @@ const App = () => {
   const incrementObjectState = () => {
     objectState.set('count', (prev) => prev + 1)
     // or
-    objectState.setState(({ count }) => ({ count: count + 1 }))
+    objectState.set(({ count }) => ({ count: count + 1 }))
   }
 
   return (
@@ -122,7 +123,7 @@ export default App
 
 | Method/Property | Description | Parameters | Return Value | Example |
 |---|---|---|---|---|
-| `useObjectState(initialState)` | Initializes and returns an object containing the state and methods. | `initialState`: An object representing the initial state. (Optional: If TypeScript is used, you can specify the type like `useObjectState<MyInterface>(initialState)`) | An object with the current state and methods (`set`, `setState`). | `const state = useObjectState({ count: 0, name: 'John' })` |
+| `useObjectState(initialState)` | Initializes and returns an object containing the state and methods. | `initialState`: An object representing the initial state. (Optional: If TypeScript is used, you can specify the type like `useObjectState<MyInterface>(initialState)`) | An object with the current state and methods (`set`). | `const state = useObjectState({ count: 0, name: 'John' })` |
 | `state.set(key, value)` | Sets the value of a single key in the state. | `key`: The key of the state property to update. <br> `value`: The new value for the key. Can be a value or a function receiving the previous value. | `void` | `state.set('count', 1)` <br> `state.set('count', (prev) => prev + 1)` |
-| `state.setState(newState)` | Merges `newState` with the current state. | `newState`: An object representing the new state to merge, or a function that receives the previous state and returns a new state object. | `void` | `state.setState({ name: 'Jane' })` <br> `state.setState((prev) => ({ count: prev.count + 1 }))` <br> `state.setState(({ count }) => ({ count: count + 1 }))` |
+| `state.set(newState)` | Merges `newState` with the current state. | `newState`: An object representing the new state to merge, or a function that receives the previous state and returns a new state object. | `void` | `state.set({ name: 'Jane' })` <br> `state.set((prev) => ({ count: prev.count + 1 }))` <br> `state.set(({ count }) => ({ count: count + 1 }))` |
 | `state.property` | Accesses the current value of a state property. | `property`: The key of the state property. | The current value of the state property. | `console.log(state.count)` |
