@@ -1,6 +1,6 @@
 {
   "name": "react-object-state",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "React hooks for creating state in object form and easier to manipulate",
   "author": "Pansther",
   "repository": "Pansther/react-object-state",
